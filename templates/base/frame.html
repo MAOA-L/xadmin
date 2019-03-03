@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>统计</title>
+    {% include 'base/css.html' %}
+</head>
+
+<body>
+<div id="wrapper">
+{#    菜单左#}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <img alt="image" class="rounded-circle" style="width: 48px;height: 48px" src="{% static 'img/1123.jpg' %}"/>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="block m-t-xs font-bold">名字</span>
+                        <span class="text-muted text-xs block">程序员<b class="caret"></b></span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a class="dropdown-item" href="profile.html">配置</a></li>
+                        <li><a class="dropdown-item" href="contacts.html">联系方式</a></li>
+                        <li><a class="dropdown-item" href="mailbox.html">邮箱</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html">登出</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            {% include 'base/menu.html' %}
+        </ul>
+    </div>
+</nav>
+{# 右#}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+                    <form role="search" class="navbar-form-custom" action="search_results.html">
+                        <div class="form-group">
+                            <input type="text" placeholder="搜点什么吧..." class="form-control"
+                                   name="top-search" id="top-search">
+                        </div>
+                    </form>
+                </div>
+                {#这里是顶部功能区#}
+                {% include 'base/tool.html' %}
+            </nav>
+        </div>
+        {#    主体内容#}
+        {% block content %}{% endblock %}
+
+        <div class="footer">
+            <div class="float-right">
+                & <strong>&copy;</strong> ？
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2018
+            </div>
+        </div>
+    </div>
+    {#        这里可以配置small_chat#}
+    {#    这里可以放置right_sidebar#}
+</div>
+
+{% include 'base/js.html' %}
+
+{#<script>#}
+{#    $(document).ready(function () {#}
+{#        setTimeout(function () {#}
+{#            toastr.options = {#}
+{#                closeButton: true,#}
+{#                progressBar: true,#}
+{#                showMethod: 'slideDown',#}
+{#                timeOut: 4000#}
+{#            };#}
+{#            toastr.success('Responsive Admin Theme', 'Welcome to INSPINIA');#}
+{##}
+{#        }, 1300);#}
+{##}
+{##}
+{#        var data1 = [#}
+{#            [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]#}
+{#        ];#}
+{#        var data2 = [#}
+{#            [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]#}
+{#        ];#}
+{#        $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [#}
+{#                data1, data2#}
+{#            ],#}
+{#            {#}
+{#                series: {#}
+{#                    lines: {#}
+{#                        show: false,#}
+{#                        fill: true#}
+{#                    },#}
+{#                    splines: {#}
+{#                        show: true,#}
+{#                        tension: 0.4,#}
+{#                        lineWidth: 1,#}
+{#                        fill: 0.4#}
+{#                    },#}
+{#                    points: {#}
+{#                        radius: 0,#}
+{#                        show: true#}
+{#                    },#}
+{#                    shadowSize: 2#}
+{#                },#}
+{#                grid: {#}
+{#                    hoverable: true,#}
+{#                    clickable: true,#}
+{#                    tickColor: "#d5d5d5",#}
+{#                    borderWidth: 1,#}
+{#                    color: '#d5d5d5'#}
+{#                },#}
+{#                colors: ["#1ab394", "#1C84C6"],#}
+{#                xaxis: {},#}
+{#                yaxis: {#}
+{#                    ticks: 4#}
+{#                },#}
+{#                tooltip: false#}
+{#            }#}
+{#        );#}
+{##}
+{#        var doughnutData = {#}
+{#            labels: ["App", "Software", "Laptop"],#}
+{#            datasets: [{#}
+{#                data: [300, 50, 100],#}
+{#                backgroundColor: ["#a3e1d4", "#dedede", "#9CC3DA"]#}
+{#            }]#}
+{#        };#}
+{##}
+{##}
+{#        var doughnutOptions = {#}
+{#            responsive: false,#}
+{#            legend: {#}
+{#                display: false#}
+{#            }#}
+{#        };#}
+{##}
+{##}
+{#        var ctx4 = document.getElementById("doughnutChart").getContext("2d");#}
+{#        new Chart(ctx4, {type: 'doughnut', data: doughnutData, options: doughnutOptions});#}
+{##}
+{#        var doughnutData = {#}
+{#            labels: ["App", "Software", "Laptop"],#}
+{#            datasets: [{#}
+{#                data: [70, 27, 85],#}
+{#                backgroundColor: ["#a3e1d4", "#dedede", "#9CC3DA"]#}
+{#            }]#}
+{#        };#}
+{##}
+{##}
+{#        var doughnutOptions = {#}
+{#            responsive: false,#}
+{#            legend: {#}
+{#                display: false#}
+{#            }#}
+{#        };#}
+{##}
+{##}
+{#        var ctx4 = document.getElementById("doughnutChart2").getContext("2d");#}
+{#        new Chart(ctx4, {type: 'doughnut', data: doughnutData, options: doughnutOptions});#}
+{##}
+{#    });#}
+{#</script>#}
+</body>
+</html>
