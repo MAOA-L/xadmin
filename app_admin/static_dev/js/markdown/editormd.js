@@ -89,6 +89,7 @@
     };
     
     editormd.defaults     = {
+        z_index              : "z-index",
         mode                 : "gfm",          //gfm or markdown
         name                 : "",             // Form element name
         value                : "",             // value for CodeMirror, if mode not gfm/markdown
@@ -394,7 +395,8 @@
             editor.css({
                 width  : (typeof settings.width  === "number") ? settings.width  + "px" : settings.width,
                 height : (typeof settings.height === "number") ? settings.height + "px" : settings.height,
-                margin : (typeof settings.height === "number") ? settings.margin + "px" : settings.margin,
+                margin : (typeof settings.margin === "number") ? settings.margin + "px" : settings.margin,
+                'z-index' :settings.z_index,
             });
             
             if (settings.autoHeight)

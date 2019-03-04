@@ -8,7 +8,34 @@
 
 {% block content %}
 
-    <div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default " aria-haspopup="true" aria-expanded="false">标题</button>
+          </div>
+          <input type="text" class="form-control" aria-label="...">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" data-id = "sort-name">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">标签<span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" data-id = "label-name">
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="z-index: 2002">
         <div id="editormd">
             <textarea style="display:none;"></textarea>
         </div>
@@ -19,7 +46,7 @@
     <script src="{% static "js/markdown/editormd.js" %}"></script>
     <script>
         let left_nav_width = $("div.left-nav").outerWidth(),
-            document_height = $(window).height(),
+            window_height = $(window).height(),
             document_width = $(document).width();
         let left_nav_width_temp = left_nav_width;
         let timer;
@@ -28,7 +55,7 @@
                 clearTimeout(timer);
             }
             timer = setTimeout(function () {
-                document_height = $(document).height();
+                window_height = $(window).height();
                 document_width = $(document).width();
                 {#alert($(window).height()+","+$(document).height())#}
                 if (document_width <= 1024){
@@ -36,8 +63,8 @@
                 }else{
                     left_nav_width_temp = left_nav_width;
                 }
-                $("div.content").css("height", document_height-50+"px");
-                $("#editormd, div.CodeMirror, div.editormd-preview").css("height", document_height - 50 + "px");
+                {#$("div.content").css("height", document_height-101+"px");#}
+                $("#editormd, div.CodeMirror, div.editormd-preview").css("height", window_height - 136 + "px");
                 timer = null;
                 console.log($(".editormd-preview").html());
 
@@ -49,12 +76,13 @@
 
         $(function() {
             $(window).resize(function () {
-                {#give_height();#}
+                give_height();
             });
             testEditor = editormd("editormd", {
+                z_index: 2002,
                 width: "inherit",
-                height: ($(document).height()-100) + 'px', //减去上面bar的高度和footer的高度
-                margin: "0 0 0",
+                height: ($(document).height()-136) + 'px', //减去上面bar的高度，输入框组，footer的高度
+                margin: "0",
                 value: '',
                 flowChart: true,
                 tex: true,
