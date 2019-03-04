@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 
 
-class BlogUser(AbstractUser):
+class BlogUser(AbstractUser, models.Model):
     id = models.AutoField("ID", primary_key=True)
     gmtCreate = models.DateTimeField("创建时间", default=now)
     gmtModified = models.DateTimeField("修改时间", default=now)

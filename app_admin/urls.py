@@ -2,6 +2,7 @@
 from django.conf import urls
 from django.urls import path
 from . import views
+from django.conf.urls import url
 """
  @Time    : 2019/3/2 16:48
  @Author  : CyanZoy
@@ -11,6 +12,6 @@ from . import views
 urlpatterns = [
     path("", views.index),
     path("index", views.index),
+    url('^publish/', views.publish)
     # path("login", views.login),
-
 ]

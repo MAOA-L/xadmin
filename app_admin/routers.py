@@ -21,6 +21,7 @@ def router(*args):
             },
             'manager': {
 
-            }
+            },
+            'active': '',
         }
     }

@@ -11,7 +11,19 @@
 
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
+    <style>
+        .errorlist li{
+            list-style-type: none;
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        ul{
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -30,8 +42,9 @@
             <p>登录</p>
             <form class="m-t" role="form" action="{% url 'account:login' %}" method="post">
                 {% csrf_token %}
-
+                {% autoescape off %}
                 {{ form.non_field_errors }}
+                {% endautoescape %}
                 {% for field in form %}
                     <div class="form-group">
                     {{ field }}

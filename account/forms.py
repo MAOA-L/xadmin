@@ -7,6 +7,7 @@
  """
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import widgets
+from django.utils.translation import gettext, gettext_lazy as _
 
 
 class LoginForm(AuthenticationForm):
@@ -14,3 +15,9 @@ class LoginForm(AuthenticationForm):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget = widgets.TextInput(attrs={'placeholder': "username", "class": "form-control"})
         self.fields['password'].widget = widgets.PasswordInput(attrs={'placeholder': "password", "class": "form-control"})
+
+    error_messages = {
+        'invalid_login': "请输入正确的%(username)s和密码。"
+                         "并注意大小写是否正确",
+        'inactive': "抱歉此账户未激活",
+    }

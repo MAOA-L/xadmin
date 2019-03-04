@@ -1,0 +1,96 @@
+{#发表页#}
+{% extends 'base/frame.html' %}
+{% load static %}
+{% block CustomCss %}
+    <link rel="stylesheet" href="{% static "css/markdown/editormd.css" %}" />
+{#    <link rel="stylesheet" href="{% static "css/style.css" %}">#}
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <div id="editormd">
+            <textarea style="display:none;"></textarea>
+        </div>
+    </div>
+{% endblock %}
+
+{% block CustomJs %}
+    <script src="{% static "js/markdown/editormd.js" %}"></script>
+    <script>
+        let left_nav_width = $("div.left-nav").outerWidth(),
+            document_height = $(window).height(),
+            document_width = $(document).width();
+        let left_nav_width_temp = left_nav_width;
+        let timer;
+        function give_height() {
+            if(timer){
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                document_height = $(document).height();
+                document_width = $(document).width();
+                {#alert($(window).height()+","+$(document).height())#}
+                if (document_width <= 1024){
+                    left_nav_width_temp = 0;
+                }else{
+                    left_nav_width_temp = left_nav_width;
+                }
+                $("div.content").css("height", document_height-50+"px");
+                $("#editormd, div.CodeMirror, div.editormd-preview").css("height", document_height - 50 + "px");
+                timer = null;
+                console.log($(".editormd-preview").html());
+
+            },0)
+        }
+        (function () {
+            {#give_height();#}
+        })();
+
+        $(function() {
+            $(window).resize(function () {
+                {#give_height();#}
+            });
+            testEditor = editormd("editormd", {
+                width: "inherit",
+                height: ($(document).height()-100) + 'px', //减去上面bar的高度和footer的高度
+                margin: "0 0 0",
+                value: '',
+                flowChart: true,
+                tex: true,
+                // Editor.md theme, default or dark, change at v1.5.0
+                // You can also custom css class .editormd-preview-theme-xxxx
+                theme: (localStorage.theme) ? localStorage.theme : "dark",
+
+                // Preview container theme, added v1.5.0
+                // You can also custom css class .editormd-preview-theme-xxxx
+                previewTheme: (localStorage.previewTheme) ? localStorage.previewTheme : "dark",
+
+                // Added @v1.5.0 & after version is CodeMirror (editor area) theme
+                editorTheme: (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
+                path: '/static/lib/'
+            });
+            /**
+             * 改变分类名
+             */
+            $("ul.sortName li a").click(function () {
+                $("#sortName").html($(this).html())
+            });
+            $("ul.labelName li a").click(function () {
+                $("#labelName").html($(this).html())
+            })
+        });
+            document.addEventListener('visibilitychange', function () {
+                let isHidden = document.hidden;
+                if (isHidden) {
+                    document.title = document.title + '-不写文章跑去干嘛';
+                } else {
+                    document.title = '发表';
+                }
+            });
+            window.onbeforeunload = function (event) {
+                return "提示：您尚有未保存的内容，离开本页将丢失编辑内容！:)";
+            };
+
+    </script>
+{% endblock %}
