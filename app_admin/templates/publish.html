@@ -76,7 +76,7 @@
                 {#$("div.content").css("height", document_height-101+"px");#}
                 $("#editormd, div.CodeMirror, div.editormd-preview").css("height", window_height - 136 + "px");
                 timer = null;
-                console.log($(".editormd-preview").html());
+                {#console.log($(".editormd-preview").html());#}
 
             },0)
         }
@@ -107,6 +107,12 @@
                 // Added @v1.5.0 & after version is CodeMirror (editor area) theme
                 editorTheme: (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
                 path: '/static/lib/'
+            });
+            {#左上角按钮重新调正编辑器大小#}
+            $('a.navbar-minimalize').click(function () {
+                setTimeout(function () {
+                    testEditor.resize();
+                },500)
             });
 
         });

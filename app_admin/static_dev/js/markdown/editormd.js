@@ -1877,7 +1877,6 @@
          */
         
         resize : function(width, height) {
-            
             width  = width  || null;
             height = height || null;
             
@@ -1922,6 +1921,7 @@
             
             if(settings.watch) 
             {
+                console.log("wathch");
                 codeMirror.width(editor.width() / 2);
                 preview.width((!state.preview) ? editor.width() / 2 : editor.width());
                 
