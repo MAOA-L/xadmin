@@ -3188,8 +3188,28 @@
         },
 
         upload : function () {
-            // console.log(this.save().preview)
-            console.log(this.getPreviewedHTML(), $("#sortName").html(),$("#labelName").html(), $("#titleName").val() );
+            let article = this.getPreviewedHTML(),
+                sort_name = $("button[data-id='sort-name']").attr('data-value'),
+                label_name = $("button[data-id='label-name']").attr('data-value'),
+                title_name = $("input[data-id='titleName']").val();
+
+            if(confirm("确认提交")){
+                $.ajax({
+                    url:'article/save',
+                    type: 'POST',
+                    data: {
+                        article: article,
+                        sort_name: sort_name,
+                        label_name: label_name,
+                        title_name: title_name
+                    },
+                    headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            }
+
         }
     };
     

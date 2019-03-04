@@ -4,6 +4,12 @@
 {% block CustomCss %}
     <link rel="stylesheet" href="{% static "css/markdown/editormd.css" %}" />
 {#    <link rel="stylesheet" href="{% static "css/style.css" %}">#}
+    <style>
+        ul[data-id='sort-name'],
+        ul[data-id='label-name']{
+            z-index: 2003;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -14,9 +20,9 @@
           <div class="input-group-btn">
             <button type="button" class="btn btn-default " aria-haspopup="true" aria-expanded="false">标题</button>
           </div>
-          <input type="text" class="form-control" aria-label="...">
+          <input type="text" class="form-control" data-id="titleName" aria-label="...">
           <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-id="sort-name" data-value="-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" data-id = "sort-name">
               <li><a href="#">Action</a></li>
               <li><a href="#">Another action</a></li>
@@ -26,9 +32,13 @@
             </ul>
           </div>
           <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">标签<span class="caret"></span></button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-id = "label-name" data-value="-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">标签<span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" data-id = "label-name">
-
+                <li><a href="#">Actions</a></li>
+                <li><a href="#">Another actions</a></li>
+                <li><a href="#">Something else heres</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated links</a></li>
             </ul>
           </div>
         </div>
@@ -98,27 +108,30 @@
                 editorTheme: (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
                 path: '/static/lib/'
             });
-            /**
-             * 改变分类名
-             */
-            $("ul.sortName li a").click(function () {
-                $("#sortName").html($(this).html())
-            });
-            $("ul.labelName li a").click(function () {
-                $("#labelName").html($(this).html())
-            })
+
         });
-            document.addEventListener('visibilitychange', function () {
-                let isHidden = document.hidden;
-                if (isHidden) {
-                    document.title = document.title + '-不写文章跑去干嘛';
-                } else {
-                    document.title = '发表';
-                }
-            });
-            window.onbeforeunload = function (event) {
-                return "提示：您尚有未保存的内容，离开本页将丢失编辑内容！:)";
-            };
+        $("ul[data-id='sort-name'] li a").click(function () {
+            let s = $("button[data-id='sort-name']");
+            s.attr('data-value', $(this).html());
+            s.html($(this).html())
+        });
+        $("ul[data-id='label-name'] li a").click(function () {
+            let s = $("button[data-id='label-name']");
+            s.attr('data-value', $(this).html());
+            s.html($(this).html())
+        });
+        document.addEventListener('visibilitychange', function () {
+            let isHidden = document.hidden;
+            if (isHidden) {
+                document.title = document.title + '-不写文章跑去干嘛';
+            } else {
+                document.title = '发表';
+            }
+        });
+        window.onbeforeunload = function (event) {
+            return "提示：您尚有未保存的内容，离开本页将丢失编辑内容！:)";
+        };
+
 
     </script>
 {% endblock %}

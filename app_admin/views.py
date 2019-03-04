@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from . import routers
 import logging
 from django.contrib.auth.decorators import login_required
@@ -25,3 +25,15 @@ def publish(request):
 
 def set_active():
     pass
+
+
+def save_article(request):
+    print("in")
+    if request.is_ajax():
+        sort_name = request.POST.get('sort_name')
+        article = request.POST.get('sort_name')
+        label_name = request.POST.get('label_name')
+        title_name = request.POST.get('title_name')
+        print(sort_name, article, label_name, title_name)
+    return HttpResponse("emmm")
+

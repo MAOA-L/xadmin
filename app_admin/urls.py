@@ -12,6 +12,6 @@ from django.conf.urls import url
 urlpatterns = [
     path("", views.index),
     path("index", views.index),
-    url('^publish/', views.publish)
-    # path("login", views.login),
+    url('^publish/$', views.publish),
+    url('article/save', views.save_article)
 ]
