@@ -3,7 +3,7 @@ from . import routers
 import logging
 from django.contrib.auth.decorators import login_required
 
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -28,7 +28,7 @@ def set_active():
 
 
 def save_article(request):
-    print("in")
+    logger.info("in")
     if request.is_ajax():
         sort_name = request.POST.get('sort_name')
         article = request.POST.get('sort_name')
