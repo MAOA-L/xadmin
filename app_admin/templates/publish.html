@@ -110,9 +110,14 @@
             });
             {#左上角按钮重新调正编辑器大小#}
             $('a.navbar-minimalize').click(function () {
-                setTimeout(function () {
+                var i = 0;
+                var ti = setInterval(function () {
+                    i++;
+                    if(i >= 72){
+                        clearInterval(ti);
+                    }
                     testEditor.resize();
-                },500)
+                },5)
             });
 
         });
