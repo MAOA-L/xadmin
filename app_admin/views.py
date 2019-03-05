@@ -39,7 +39,7 @@ def save_article(request) -> "save article":
         label_name = request.POST.get('label_name')
         title_name = request.POST.get('title_name')
 
-        article.id = uuid.uuid1()
+        article.uuid = uuid.uuid1()
         article.title = title_name
         article.sort = sort_name
         article.label = label_name
