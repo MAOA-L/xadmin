@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'xadmin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'NAME': 'admin',
+        'HOST': '47.106.236.37',
+        'NAME': 'BlogManager',
         'USER': 'admin',
-        'PASSWORD': '1996Chan',
+        'PASSWORD': 'admin1348',
         'PORT': 3306,
         'CONN_MAX_AGE': 700,
     }
