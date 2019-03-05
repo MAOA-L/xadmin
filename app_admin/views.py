@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from . import routers
 import logging
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+import uuid
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -27,13 +28,24 @@ def set_active():
     pass
 
 
-def save_article(request):
+@permission_required('add_article')
+def save_article(request) -> "save article":
+    from .models import Article
     logger.info("in")
     if request.is_ajax():
+        article = Article()
         sort_name = request.POST.get('sort_name')
-        article = request.POST.get('sort_name')
+        text = request.POST.get('article')
         label_name = request.POST.get('label_name')
         title_name = request.POST.get('title_name')
+
+        article.id = uuid.uuid1()
+        article.title = title_name
+        article.sort = sort_name
+        article.label = label_name
+        article.text = text
+        article.save()
         print(sort_name, article, label_name, title_name)
+
     return HttpResponse("emmm")
 

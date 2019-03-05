@@ -3192,7 +3192,16 @@
                 label_name = $("button[data-id='label-name']").attr('data-value'),
                 title_name = $("input[data-id='titleName']").val();
 
-            if(confirm("确认提交")){
+            swal({
+                title: "确认?",
+                text: "发表当前的文章吗",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
                 $.ajax({
                     url:'article/save',
                     type: 'POST',
@@ -3204,10 +3213,15 @@
                     },
                     headers:{"X-CSRFToken":$.cookie('csrftoken')},
                     success: function (res) {
-                        console.log(res)
+
+                        if(res.code === 200){
+                            swal("成功!", "已发表", "success");
+                        }else{
+                            swal("失败!", "未发表", "error");
+                        }
                     }
                 })
-            }
+            });
 
         }
     };
