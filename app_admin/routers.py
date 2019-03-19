@@ -15,7 +15,7 @@ def router(*args):
         },
         'article': {
             'publish': {
-                'url': 'publish',
+                'url': '/publish',
                 'name': '文章发表',
                 'active': ''
             },
