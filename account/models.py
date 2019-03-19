@@ -5,6 +5,7 @@ from django.utils.timezone import now
 
 class BlogUser(AbstractUser, models.Model):
     id = models.AutoField("ID", primary_key=True)
+    openId = models.CharField(max_length=50)
     gmtCreate = models.DateTimeField("创建时间", default=now)
     gmtModified = models.DateTimeField("修改时间", default=now)
     phoneNumber = models.CharField("手机号", max_length=20)

@@ -90,6 +90,15 @@ DATABASES = {
         'PASSWORD': 'admin1348',
         'PORT': 3306,
         'CONN_MAX_AGE': 700,
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'BlogManager',
+        'PORT': 3306,
+        'HOST': '47.102.203.241',
+        'USER': 'user',
+        'PASSWORD': 'Wang.1314',
+        'CONN_MAX_AGE': 120,
     }
 }
 
