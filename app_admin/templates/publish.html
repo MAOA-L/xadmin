@@ -20,15 +20,19 @@
           <div class="input-group-btn">
             <button type="button" class="btn btn-default " aria-haspopup="true" aria-expanded="false">标题</button>
           </div>
-          <input type="text" class="form-control" data-id="titleName" aria-label="...">
+          <input type="text" class="form-control" data-id="titleName" aria-label="..." placeholder="在此输入标题">
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-id="sort-name" data-value="-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" data-id = "sort-name">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
+              {% for foo in sort %}
+                <li><a href="#">{{ foo }}</a></li>
+              {% endfor %}
+
+{#              <li><a href="#">Action</a></li>#}
+{#              <li><a href="#">Another action</a></li>#}
+{#              <li><a href="#">Something else here</a></li>#}
+{#              <li role="separator" class="divider"></li>#}
+{#              <li><a href="#">Separated link</a></li>#}
             </ul>
           </div>
           <div class="input-group-btn">

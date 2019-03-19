@@ -3,6 +3,7 @@ from . import routers
 import logging
 from django.contrib.auth.decorators import login_required, permission_required
 import uuid
+from .models import Sort
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -19,8 +20,12 @@ def index(request):
 @login_required()
 def publish(request):
     logger.info("view->publish")
+    # 激活菜单
     p = routers.router()
     p['article']['active'] = p['article']['publish']['active'] = 'active'
+    # 获取分类
+    sort = Sort.objects.all()
+    p['sort'] = sort
     return render(request, "publish.html", p)
 
 
@@ -48,4 +53,6 @@ def save_article(request) -> "save article":
         print(sort_name, article, label_name, title_name)
 
     return HttpResponse("emmm")
+
+
 
