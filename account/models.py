@@ -11,5 +11,5 @@ class BlogUser(AbstractUser, models.Model):
     phoneNumber = models.CharField("手机号", max_length=20)
     nickname = models.CharField('昵称', max_length=100, blank=True)
     mugshot = models.ImageField('头像', upload_to='upload/mugshots', blank=True)
-
+    motto = models.CharField('座右铭', max_length=255, null=True)
 
