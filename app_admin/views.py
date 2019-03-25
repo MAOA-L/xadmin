@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse
+
+from account.models import BlogUser
 from . import routers
 import logging
 from django.contrib.auth.decorators import login_required, permission_required
@@ -62,12 +64,21 @@ def save_article(request) -> "save article":
     return HttpResponse("emmm")
 
 
+@login_required()
 def author(request):
     p = routers.router()
     p['author']['active'] = p['author']['info']['active'] = 'active'
+    p['user'] = request.user
     return render(request, "author_info.html", p)
 
 
 def author_update(request):
-    print(request.POST.get("username"))
-    return HttpResponse("e")
+    u = request.user
+    u.username = request.POST.get("username")
+    u.first_name = request.POST.get("first_name")
+    u.last_name = request.POST.get("last_name")
+    u.email = request.POST.get("email")
+    u.phoneNumber = request.POST.get("phoneNumber")
+    u.motto = request.POST.get("motto")
+    BlogUser.save(u)
+    return HttpResponse(json.dumps({"code": 200}))
