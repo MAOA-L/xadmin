@@ -1,0 +1,74 @@
+{#发表页#}
+{% extends 'base/frame.html' %}
+{% load static %}
+{% block CustomCss %}
+    <link rel="stylesheet" href="{% static "css/markdown/editormd.css" %}" />
+{#    <link rel="stylesheet" href="{% static "css/style.css" %}">#}
+    <style>
+        ul[data-id='sort-name'],
+        ul[data-id='label-name']{
+            z-index: 2003;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>我的
+                        <small></small>
+                    </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">登录名</label>
+                            <div class="col-md-4"><input name="username" type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">姓</label>
+                            <div class="col-md-4"><input name="first_name" type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">名</label>
+                            <div class="col-md-4"><input name="last_name" type="text" class="form-control"></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">手机号</label>
+                            <div class="col-md-4"><input name="phoneNumber" type="tel" class="form-control"></div>
+                        </div>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">邮箱</label>
+                            <div class="col-md-4"><input name="email" type="email" class="form-control"></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">座右铭</label>
+                            <div class="col-md-4"><input name="motto" type="text" class="form-control"></div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-sm-offset-2">
+{#                                <button class="btn btn-white btn-sm" type="submit">Cancel</button>#}
+                                <button class="btn btn-primary btn-sm" type="submit">更新信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block CustomJs %}
+
+{% endblock %}

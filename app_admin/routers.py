@@ -23,5 +23,14 @@ def router(*args):
 
             },
             'active': '',
+        },
+        'author': {
+            'info': {
+                'url': '/author/info',
+                'name': '信息',
+                'active': ''
+            },
+
+            'active': '',
         }
     }

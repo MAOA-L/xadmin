@@ -62,4 +62,12 @@ def save_article(request) -> "save article":
     return HttpResponse("emmm")
 
 
+def author(request):
+    p = routers.router()
+    p['author']['active'] = p['author']['info']['active'] = 'active'
+    return render(request, "author_info.html", p)
 
+
+def author_update(request):
+    print(request.POST.get("username"))
+    return HttpResponse("e")

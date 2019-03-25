@@ -9,3 +9,10 @@
         <li><a href="">管理</a></li>
     </ul>
 </li>
+<li class="{{ author.active }}">
+    <a href="javascript:void(0);"><i class="fa fa-user"></i> <span class="nav-label">我的</span>
+        <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li class="{{ author.info.active }}"><a href="{{ author.info.url }}">{{ author.info.name }}</a></li>
+    </ul>
+</li>

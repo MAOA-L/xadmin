@@ -13,5 +13,7 @@ urlpatterns = [
     path("", views.index),
     path("index", views.index),
     url('^publish/$', views.publish),
-    url('article/save', views.save_article)
+    url('article/save', views.save_article),
+    url('author/info', views.author),
+    url('author/author_info_update', views.author_update),
 ]
