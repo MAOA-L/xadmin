@@ -148,29 +148,49 @@
                     loading(true);
 
                     var submitHandler = function() {
-
+                        console.log("inininini")
                         var uploadIframe = document.getElementById(iframeName);
 
                         uploadIframe.onload = function() {
 
-                            loading(false);
+                            loading(true);
 
-                            var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
-                            var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
+                            // var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
+                            // var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
+                            let file = $('input[name="editormd-image-file"]').get(0).files[0];
+                            let formData = new FormData();
+                            formData.append("file", file);
+                            $.ajax({
+                                url: 'image/upload',
+                                type: 'POST',
+                                contentType:false,
+                                processData:false,
+                                data: formData,
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                success:function (res) {
+                                    console.log(res);
+                                    res = JSON.parse(res);
+                                    if(res.code === 200){
+                                        console.log("成功了");
+                                        loading(false);
+                                        dialog.find("[data-url]").val(res.data);
+                                    }
+                                }
+                            });
 
-                            json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
-
-                            if(!settings.crossDomainUpload)
-                            {
-                              if (json.success === 1)
-                              {
-                                  dialog.find("[data-url]").val(json.url);
-                              }
-                              else
-                              {
-                                  alert(json.message);
-                              }
-                            }
+                            // json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
+                            //
+                            // if(!settings.crossDomainUpload)
+                            // {
+                            //   if (json.success === 1)
+                            //   {
+                            //       dialog.find("[data-url]").val(json.url);
+                            //   }
+                            //   else
+                            //   {
+                            //       alert(json.message);
+                            //   }
+                            // }
 
                             return false;
                         };

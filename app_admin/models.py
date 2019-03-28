@@ -33,3 +33,13 @@ class Sort(models.Model):
     class Meta:
         db_table = "sort"
         verbose_name_plural = verbose_name = "文章分类"
+
+
+class Images(models.Model):
+    """图片接收"""
+    uuid = models.CharField(max_length=255, unique=True)
+    img = models.ImageField(upload_to="img")
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = "img"

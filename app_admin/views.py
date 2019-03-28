@@ -5,8 +5,8 @@ from . import routers
 import logging
 from django.contrib.auth.decorators import login_required, permission_required
 import uuid
-from .models import Sort
-import json
+from .models import Sort, Images
+import json, re
 from django.contrib import auth
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -61,7 +61,7 @@ def save_article(request) -> "save article":
         article.save()
         print(sort_name, article, label_name, title_name)
 
-    return HttpResponse("emmm")
+    return HttpResponse(json.dumps({"code": 200, "msg": "保存成功"}))
 
 
 @login_required()
@@ -82,3 +82,18 @@ def author_update(request):
     u.motto = request.POST.get("motto")
     BlogUser.save(u)
     return HttpResponse(json.dumps({"code": 200}))
+
+
+def img(request):
+    uid = uuid.uuid1()
+    name = "http://"+request.get_host()+"/media/"
+    print(name)
+    if request.method == 'POST':
+        new_img = Images(
+            uuid=uid,
+            img=request.FILES.get('file'),
+            name=name
+        )
+        new_img.save()
+    ni = Images.objects.get(uuid=uid)
+    return HttpResponse(json.dumps({"code": 200, "data": ni.name+str(ni.img)}))

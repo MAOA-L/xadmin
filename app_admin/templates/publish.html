@@ -125,7 +125,8 @@
 
                 // Added @v1.5.0 & after version is CodeMirror (editor area) theme
                 editorTheme: (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
-                path: '/static/lib/'
+                path: '/static/lib/',
+                imageUpload: true
             });
             {#左上角按钮重新调正编辑器大小#}
             $('a.navbar-minimalize').click(function () {

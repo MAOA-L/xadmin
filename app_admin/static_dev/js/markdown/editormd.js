@@ -3213,7 +3213,9 @@
                     },
                     headers:{"X-CSRFToken":$.cookie('csrftoken')},
                     success: function (res) {
-
+                        console.log(res)
+                        res = JSON.parse(res)
+                        console.log(res.code)
                         if(res.code === 200){
                             swal("成功!", "已发表", "success");
                         }else{

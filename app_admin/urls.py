@@ -16,4 +16,5 @@ urlpatterns = [
     url('article/save', views.save_article),
     url('author/info', views.author),
     url('author/author_info_update', views.author_update),
+    url('image/upload', views.img)
 ]
