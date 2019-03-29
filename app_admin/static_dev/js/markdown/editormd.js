@@ -71,7 +71,7 @@
             "list-ul", "list-ol", "hr", "|",
             "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|",
             "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|",
-            "help", "info", "upload",
+            "help", "info",
         ],
         simple : [
             "undo", "redo", "|", 
@@ -147,7 +147,7 @@
         onpreviewscroll      : function() {},
         
         imageUpload          : false,
-        imageFormats         : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageFormats         : ["jpg", "jpeg", "gif", "png", "bmp", "webp", "JPG"],
         imageUploadURL       : "",
         crossDomainUpload    : false,
         uploadCallbackURL    : "",
@@ -224,7 +224,6 @@
             // clear            : "fa-eraser",
             help             : "fa-question-circle",
             info             : "fa-info-circle",
-            upload           : "fa-cloud-upload",
         },
         toolbarIconTexts     : {},
         
@@ -271,7 +270,6 @@
                 search           : "搜索",
                 help             : "使用帮助",
                 info             : "关于" + editormd.title,
-                upload           : "发布文章"
             },
             buttons : {
                 enter  : "确定",
@@ -3186,46 +3184,7 @@
             this.showInfoDialog();
         },
 
-        upload : function () {
-            let article = this.getPreviewedHTML(),
-                sort_name = $("button[data-id='sort-name']").attr('data-value'),
-                label_name = $("button[data-id='label-name']").attr('data-value'),
-                title_name = $("input[data-id='titleName']").val();
 
-            swal({
-                title: "确认?",
-                text: "发表当前的文章吗",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            }, function () {
-                $.ajax({
-                    url:'article/save',
-                    type: 'POST',
-                    data: {
-                        article: article,
-                        sort_name: sort_name,
-                        label_name: label_name,
-                        title_name: title_name
-                    },
-                    headers:{"X-CSRFToken":$.cookie('csrftoken')},
-                    success: function (res) {
-                        console.log(res)
-                        res = JSON.parse(res)
-                        console.log(res.code)
-                        if(res.code === 200){
-                            swal("成功!", "已发表", "success");
-                        }else{
-                            swal("失败!", "未发表", "error");
-                        }
-                    }
-                })
-            });
-
-        }
     };
     
     editormd.keyMaps = {

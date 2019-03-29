@@ -14,7 +14,12 @@ urlpatterns = [
     path("index", views.index),
     url('^publish/$', views.publish),
     url('article/save', views.save_article),
+    path('article/update/<str:uuid>', views.update_article),
     url('author/info', views.author),
     url('author/author_info_update', views.author_update),
+    path('manage/<int:page>', views.manage),
+    url('^manage/$', views.manage),
+    path('manage/edit/markdown/<str:uuid>', views.manage_markdown),
+    path('manage/edit/<str:uuid>', views.manage_edit),
     url('image/upload', views.img)
 ]

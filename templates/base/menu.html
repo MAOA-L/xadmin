@@ -6,7 +6,7 @@
         <span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
         <li class="{{ article.publish.active }}"><a href="{{ article.publish.url }}">{{ article.publish.name }}</a></li>
-        <li><a href="">管理</a></li>
+        <li class="{{ article.manage.active }}"><a href="{{ article.manage.url }}">{{ article.manage.name }}</a></li>
     </ul>
 </li>
 <li class="{{ author.active }}">

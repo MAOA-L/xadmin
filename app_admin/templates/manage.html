@@ -1,0 +1,101 @@
+{#发表页#}
+{% extends 'base/frame.html' %}
+{% load static %}
+{% block CustomCss %}
+{#    <link rel="stylesheet" href="{% static "css/style.css" %}">#}
+    <style>
+        .pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+            color: #777;
+            cursor: not-allowed;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper wrapper-content ">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>文章管理</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <input type="text" placeholder="输入标题以搜索" class="form-control">
+                                    <span class="input-group-append"> <button type="button" class="btn btn-primary">搜索</button> </span></div>
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                        <table class="footable table table-stripped toggle-arrow-tiny dataTables-example">
+                            <thead>
+                            <tr>
+                                <th data-toggle="true">序号</th>
+                                <th>创建时间</th>
+                                <th>修改时间</th>
+                                <th>标题</th>
+                                <th>分类</th>
+                                <th>浏览数</th>
+                                <th>是否展示</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for article in article_list %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ article.gmt_create }}</td>
+                                        <td>{{ article.gmt_modified }}</td>
+                                        <td><a href="http://diary.cyanzoy.top/articles/{{ article.uuid }}" target="_blank">{{ article.title }}</a></td>
+                                        <td>{{ article.sort }}</td>
+                                        <td>{{ article.see_number }}</td>
+                                        <td class="footable-visible footable-last-column"><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                                        <td class="footable-visible footable-last-column">
+                                            <div class="btn-group" >
+                                                <button class="btn-primary btn btn-xs">
+                                                    <a href="/manage/edit/{{ article.uuid }}" data-type="edit" data-id="" target="_blank" style="color: #fff;">编辑</a>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="footable-visible">
+                                        <ul class="pagination float-right">
+                                            <li class="footable-page-arrow"><a data-page="first" href="/manage">«</a></li>
+                                            {% if article_list.has_previous %}
+                                                <li class="footable-page-arrow"><a data-page="prev" href="/manage/{{ article_list.previous_page_number }}">‹</a></li>
+                                                <li class="footable-page-arrow"><a data-page="prev" href="/manage/{{ article_list.previous_page_number }}">{{ article_list.previous_page_number }}</a></li>
+                                                {% else %}
+                                                <li class="footable-page-arrow disabled" style="cursor:not-allowed"><a data-page="prev" href="javascript:void(0);">‹</a></li>
+                                            {% endif %}
+                                            <li class="footable-page active"><a href="javascript:void(0);">{{ article_list.number }}</a></li>
+
+                                            {% if article_list.has_next %}
+                                                <li class="footable-page-arrow"><a data-page="next" href="/manage/{{ article_list.next_page_number }}">{{ article_list.next_page_number }}</a></li>
+                                                <li class="footable-page-arrow"><a data-page="next" href="/manage/{{ article_list.next_page_number }}">›</a></li>
+                                                {% else %}
+                                                <li class="footable-page-arrow disabled" style="cursor:not-allowed"><a data-page="next" href="javascript:void(0);">›</a></li>
+                                            {% endif %}
+                                            <li class="footable-page-arrow"><a data-page="last" href="/manage/{{ article_list.paginator.num_pages }}">»</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block CustomJs %}
+{% endblock %}

@@ -38,11 +38,11 @@
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-id = "label-name" data-value="-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">标签<span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right" data-id = "label-name">
-                <li><a href="#">Actions</a></li>
-                <li><a href="#">Another actions</a></li>
-                <li><a href="#">Something else heres</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated links</a></li>
+{#                <li><a href="#">Actions</a></li>#}
+{#                <li><a href="#">Another actions</a></li>#}
+{#                <li><a href="#">Something else heres</a></li>#}
+{#                <li role="separator" class="divider"></li>#}
+{#                <li><a href="#">Separated links</a></li>#}
             </ul>
           </div>
         </div>
@@ -96,7 +96,6 @@
                 $("#editormd, div.CodeMirror, div.editormd-preview").css("height", window_height - 136 + "px");
                 timer = null;
                 {#console.log($(".editormd-preview").html());#}
-
             },0)
         }
         (function () {
@@ -107,27 +106,86 @@
             $(window).resize(function () {
                 give_height();
             });
-            testEditor = editormd("editormd", {
+            let testEditor = editormd("editormd", {
                 z_index: 2002,
                 width: "inherit",
                 height: ($(document).height()-136) + 'px', //减去上面bar的高度，输入框组，footer的高度
                 margin: "0",
-                value: '',
                 flowChart: true,
                 tex: true,
-                // Editor.md theme, default or dark, change at v1.5.0
-                // You can also custom css class .editormd-preview-theme-xxxx
                 theme: (localStorage.theme) ? localStorage.theme : "dark",
-
-                // Preview container theme, added v1.5.0
-                // You can also custom css class .editormd-preview-theme-xxxx
                 previewTheme: (localStorage.previewTheme) ? localStorage.previewTheme : "dark",
-
-                // Added @v1.5.0 & after version is CodeMirror (editor area) theme
                 editorTheme: (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
                 path: '/static/lib/',
-                imageUpload: true
+                imageUpload: true,
+                toolbarIcons : function() {
+                    let i = editormd.toolbarModes.full;
+                    i.push("upload");
+                    return i;
+                },
+                toolbarIconsClass : {
+                    upload : "fa-cloud-upload"  // 指定一个FontAawsome的图标类
+                },
+                toolbarIconTexts : {
+                    upload : ""  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+                },
+                lang : {
+                    toolbar : {
+                        upload : "发布文章",
+                    }
+                },
+                toolbarHandlers : {
+                    upload : function () {
+                        console.log("123")
+                        let article = this.getPreviewedHTML(),
+                            markdown = this.getMarkdown(),
+                            sort_name = $("button[data-id='sort-name']").attr('data-value'),
+                            label_name = $("button[data-id='label-name']").attr('data-value'),
+                            title_name = $("input[data-id='titleName']").val();
+
+                        swal({
+                            title: "确认?",
+                            text: "发表当前的文章吗",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: false
+                        }, function () {
+                            $.ajax({
+                                url:'article/save',
+                                type: 'POST',
+                                data: {
+                                    article: article,
+                                    markdown: markdown,
+                                    sort_name: sort_name,
+                                    label_name: label_name,
+                                    title_name: title_name
+                                },
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                success: function (res) {
+                                    console.log(res);
+                                    res = JSON.parse(res);
+                                    console.log(res.code);
+                                    if(res.code === 200){
+                                        swal("成功!", "已发表", "success");
+                                    }else{
+                                        swal("失败!", "未发表", "error");
+                                    }
+                                }
+                            })
+                        });
+
+                    }
+                },
+
             });
+
+            setTimeout(function () {
+                console.log(testEditor.getMarkdown())
+            },8000);
+
             {#左上角按钮重新调正编辑器大小#}
             $('a.navbar-minimalize').click(function () {
                 var i = 0;
@@ -162,7 +220,6 @@
         window.onbeforeunload = function (event) {
             return "提示：您尚有未保存的内容，离开本页将丢失编辑内容！:)";
         };
-
 
     </script>
 {% endblock %}

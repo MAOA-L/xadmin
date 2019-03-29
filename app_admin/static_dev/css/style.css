@@ -1517,7 +1517,7 @@ button:focus {
   font-size: .8rem;
 }
 .float-e-margins .btn {
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
 }
 .btn-w-m {
   min-width: 120px;

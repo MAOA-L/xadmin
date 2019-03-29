@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'm$71w@(o*q=s#z9t9gq072$4ody0%y_xu_%bubj3i_%x40!9kj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -101,6 +101,7 @@ DATABASES = {
         'CONN_MAX_AGE': 120,
     }
 }
+# DATABASE_ROUTERS = ['xadmin.db_router.MasterSlaveDBRouter']
 
 
 # Password validation

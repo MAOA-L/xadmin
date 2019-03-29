@@ -19,8 +19,10 @@ def router(*args):
                 'name': '文章发表',
                 'active': ''
             },
-            'manager': {
-
+            'manage': {
+                'url': '/manage',
+                'name': '文章管理',
+                'active': ''
             },
             'active': '',
         },

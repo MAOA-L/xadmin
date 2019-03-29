@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, HttpResponse
 
 from account.models import BlogUser
@@ -8,6 +9,7 @@ import uuid
 from .models import Sort, Images
 import json, re
 from django.contrib import auth
+from .models import Article
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -44,24 +46,33 @@ def set_active():
 
 @permission_required('add_article')
 def save_article(request) -> "save article":
-    from .models import Article
     logger.info("in")
     if request.is_ajax():
-        article = Article()
-        sort_name = request.POST.get('sort_name')
-        text = request.POST.get('article')
-        label_name = request.POST.get('label_name')
-        title_name = request.POST.get('title_name')
-
-        article.uuid = uuid.uuid1()
-        article.title = title_name
-        article.sort = sort_name
-        article.label = label_name
-        article.text = text
+        article = Article(
+            uuid=uuid.uuid1(),
+            sort=request.POST.get('sort_name'),
+            markdown=request.POST.get('markdown'),
+            text=request.POST.get('article'),
+            label=request.POST.get('label_name'),
+            title=request.POST.get('title_name'),
+        )
         article.save()
-        print(sort_name, article, label_name, title_name)
 
     return HttpResponse(json.dumps({"code": 200, "msg": "保存成功"}))
+
+
+@permission_required('change_article')
+def update_article(request, uuid):
+    logger.info("in")
+    if request.is_ajax():
+        article = Article.objects.get(uuid=uuid)
+        article.markdown = request.POST.get('markdown')
+        article.text = request.POST.get('article')
+        article.save()
+
+        return HttpResponse(json.dumps({"code": 200, "msg": "更新成功"}))
+    else:
+        return HttpResponse(json.dumps({"code": 30002, "msg": "更新失败"}))
 
 
 @login_required()
@@ -97,3 +108,36 @@ def img(request):
         new_img.save()
     ni = Images.objects.get(uuid=uid)
     return HttpResponse(json.dumps({"code": 200, "data": ni.name+str(ni.img)}))
+
+
+def manage(request, page=1):
+    print(page)
+    article_list = Article.objects.all().order_by('-gmt_create')
+    paginator = Paginator(article_list, 15)
+    try:
+        p = paginator.page(page)
+    except PageNotAnInteger:
+        p = paginator.page(1)
+    except EmptyPage:
+        p = paginator.page(paginator.num_pages)
+
+    g = routers.router()
+    g['article']['active'] = g['article']['manage']['active'] = 'active'
+    g['article_list'] = p
+    return render(request, "manage.html", g)
+
+
+def manage_edit(request, uuid=None):
+    if uuid and uuid is not '':
+        return render(request, "edit.html", {"uuid": uuid})
+    else:
+        return HttpResponse({"code": 33002, "msg": "不存在的文章"})
+
+
+def manage_markdown(request, uuid=None):
+    if uuid and uuid is not '':
+        return HttpResponse(Article.objects.get(uuid=uuid).markdown)
+    else:
+        return HttpResponse({"code": 33002, "msg": "不存在的文章"})
+
+
