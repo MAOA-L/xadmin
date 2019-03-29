@@ -83,14 +83,13 @@ class LoginView(FormView):
 
 
 def qq_login(request):
-
-    print("in")
+    form = AuthenticationForm()
     # 根据参数返回需要获取code的url
     # 根据回调过来的code获取access_token
-    client_id = 101549521
-    client_secret = "df357795e13de29dcd168354b34f0509"
+    client_id = 101548919
+    client_secret = "634dcb3f1e8226a4309f3b0e6c073ef6"
     code = request.GET.get("code")
-    redirect_uri = "http://mfweb.cyanzoy.top:8080/xadmin/qq_login"
+    redirect_uri = "http://www.cyanzoy.top/auth/qq"
     url = "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id={}&client_secret={}&code={}&redirect_uri={}"
     p = requests.get(url=url.format(client_id, client_secret, code, redirect_uri)).content.decode("UTF-8")
     # 输出access_token等信息
@@ -107,14 +106,18 @@ def qq_login(request):
     openid = callback_json["openid"]
     print('openid', openid)
     # 若数据库中已经保存openId则终止
-    qquser = BlogUser.objects.get(openId=openid)
+    qquser = None
+    try:
+        qquser = BlogUser.objects.get(openId=openid)
+    except Exception as e:
+        return render(request, "login.html", {"loginError": "无效用户", "form": form})
     if qquser:
         auth.login(request, qquser)
         # request.session[SESSION_KEY] = qquser.username
     if request.user.is_authenticated:
         print("已经认证")
     else:
-        print("ai")
+        render(request, "login.html", {"login_error": "无效用户"})
     # 若数据库中无此openId则将之后将用户信息保存至数据库
     # Access Token以及OpenID来访问用户信息->openid来识别用户
     user = requests.get("https://graph.qq.com/user/get_user_info?access_token={}&oauth_consumer_key={}&openid={}"

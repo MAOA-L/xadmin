@@ -21,5 +21,6 @@ urlpatterns = [
     url('^manage/$', views.manage),
     path('manage/edit/markdown/<str:uuid>', views.manage_markdown),
     path('manage/edit/<str:uuid>', views.manage_edit),
-    url('image/upload', views.img)
+    url('image/upload', views.img),
+
 ]
